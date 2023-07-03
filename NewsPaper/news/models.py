@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from datetime import datetime
 from django.db.models import Sum
+from django.core.validators import MinValueValidator
 
 # длина начала текста поста для предпросмотра
 PREVIEW_LEN = 124
@@ -51,11 +52,11 @@ class Post(models.Model):
      #возвращает начало статьи (предварительный
                         # просмотр) длиной 124 символа и
                          # добавляет многоточие в конце.
-def preview(self):
-    if len(self.novosti) > PREVIEW_LEN:
-        return self.novosti[:PREVIEW_LEN + 1] + '...'
-    else:
-        return self.novosti
+    def preview(self):
+        if len(self.novosti) > PREVIEW_LEN:
+            return self.novosti[:PREVIEW_LEN + 1] + '...'
+        else:
+            return self.novosti
 
 class PostCategory(models.Model):
     postThrough = models.ForeignKey(Post, on_delete=models.CASCADE)
