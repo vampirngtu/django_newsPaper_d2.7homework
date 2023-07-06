@@ -1,5 +1,7 @@
 {% extends 'flatpages/default.html' %}
 
+{% load custom_filters %}
+
 {% block title %}
 ALL NEWS
 {% endblock title %}
@@ -29,7 +31,7 @@ ALL NEWS
         {% for new in news %}
             <tr>
                 <td>
-                    {{ post.zagolovok|truncatechars:20 }}
+                    {{ post.zagolovok|NoMat:STOP_LIST }}
                 </td>
                 <td>
                     {{ post.novosti|truncatewords:7 }}
