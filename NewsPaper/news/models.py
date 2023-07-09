@@ -43,7 +43,11 @@ class Post(models.Model):
     novosti = models.TextField(default="Новость в разработке")
     rating = models.IntegerField(default=0)
 
+    def __str__(self):
+        return f'{self.zagolovok} {self.novosti}'
+        return f'/posts/{self.id}'
 
+    def get_absolute_url(self):
     def like(self):
         self.rating += 1
 

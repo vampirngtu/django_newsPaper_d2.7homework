@@ -1,0 +1,46 @@
+{% extends 'flatpages/default.html' %}
+
+{% block title %}
+ALL NEWS
+{% endblock title %}
+
+{% block content %}
+<table>
+            <thead>
+                <th>
+                    заголовок
+                </th>
+                <th>
+                    новость
+                </th>
+                <th>
+                    автор
+                </th>
+                <th>
+                    дата
+                </th>
+                <th>
+                    рейтинг
+                </th>
+            </thead>
+
+
+            <tr>
+                <td>
+                    {{ post.zagolovok|title }}
+                </td>
+                <td>
+                    {{ post.novosti|title }}
+                </td>
+                <td>
+                    {{ post.author }}
+                </td>
+                <td>
+                    {{ post.time_in }}
+                </td>
+                <td>
+                    {{ post.rating }}
+                </td>
+            </tr>
+        </table>
+{% endblock content %}
