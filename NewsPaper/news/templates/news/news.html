@@ -1,0 +1,12 @@
+{% extends '/templates/flatpages/default.html' %}
+<!--{% load custom_filters %}-->
+
+{% block title %}
+Products
+{% endblock title %}
+
+<!-- В контенте на странице мы выводим все товары -->
+{% block content %}
+<h1>Все продукты</h1>
+{{ products }}
+{% endblock content %}

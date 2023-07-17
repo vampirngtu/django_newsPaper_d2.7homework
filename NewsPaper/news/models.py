@@ -9,7 +9,8 @@ PREVIEW_LEN = 124
 
 class Author(models.Model):
     authorUser = models.OneToOneField(User, on_delete=models.CASCADE)
-    ratingAuthor = models.IntegerField(default=0)
+    ratingAuthor = models.IntegerField(default=0,
+       validators=[MinValueValidator(0)],)
 
     def update_rating(self):
         postRat = self.post_set.all().aggregate(postRating=Sum('rating'))
@@ -28,26 +29,25 @@ class Category(models.Model):
 
 class Post(models.Model):
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
+    zagolovok = models.CharField(max_length=255)
+    novosti = models.TextField(default="Новость в разработке")
+    rating = models.IntegerField(default=0,
+       validators=[MinValueValidator(0)],)
 
-    NEWS = 'NW'
     ARTICLE = 'AR'
-    POST_TYPE = (
+    NEWS = 'NW'
+
+    POST_TYPES = [
         (ARTICLE, 'статья'),
         (NEWS, 'новость'),
-    )
-    post_type = models.CharField(max_length=2, choices=POST_TYPE, default=ARTICLE)
+    ]
+    post_type = models.CharField(max_length=2, choices=POST_TYPES, default=ARTICLE)
     time_in = models.DateTimeField(auto_now_add=True)
     postCategory = models.ManyToManyField(Category, through='PostCategory')
 
-    zagolovok = models.CharField(max_length=255)
-    novosti = models.TextField(default="Новость в разработке")
-    rating = models.IntegerField(default=0)
 
-    def __str__(self):
-        return f'{self.zagolovok} {self.novosti}'
-        return f'/posts/{self.id}'
 
-    def get_absolute_url(self):
+
     def like(self):
         self.rating += 1
 
@@ -56,11 +56,11 @@ class Post(models.Model):
      #возвращает начало статьи (предварительный
                         # просмотр) длиной 124 символа и
                          # добавляет многоточие в конце.
-    def preview(self):
-        if len(self.novosti) > PREVIEW_LEN:
-            return self.novosti[:PREVIEW_LEN + 1] + '...'
-        else:
-            return self.novosti
+def preview(self):
+    if len(self.novosti) > PREVIEW_LEN:
+        return self.novosti[:PREVIEW_LEN + 1] + '...'
+    else:
+        return self.novosti
 
 class PostCategory(models.Model):
     postThrough = models.ForeignKey(Post, on_delete=models.CASCADE)
@@ -69,9 +69,10 @@ class PostCategory(models.Model):
 class Comment(models.Model):
     commentPost = models.ForeignKey(Post, on_delete=models.CASCADE)
     commentUser = models.ForeignKey(User, on_delete=models.CASCADE)
-    komment = models.TextField(default="без комментариев")
-    time_Commit = models.DateTimeField(auto_now_add=True)
-    rating = models.IntegerField(default=0)
+    comment = models.TextField(default="без комментариев")
+    date_Commit = models.DateTimeField(auto_now_add=True)
+    rating = models.IntegerField(default=0,
+       validators=[MinValueValidator(0)],)
 
     def __str__(self):
        return self.commentUser.username
