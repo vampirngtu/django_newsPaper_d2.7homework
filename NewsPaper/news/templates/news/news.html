@@ -1,12 +1,60 @@
-{% extends '/templates/flatpages/default.html' %}
-<!--{% load custom_filters %}-->
+{% extends 'layout/base.html' %}
+{% load custom_filters %}
 
 {% block title %}
-Products
+News
 {% endblock title %}
 
 <!-- В контенте на странице мы выводим все товары -->
 {% block content %}
-<h1>Все продукты</h1>
-{{ products }}
+    <h1>Все новости</h1>
+    {% if posts %}
+<h3>{{ time_now|date:'d M Y' }}</h3>
+        <table class="table">>
+            <tr>
+                <th scope="col">
+                    Автор
+                </th>
+                <th scope="col">
+                    Заголовок
+                </th>
+                <th scope="col">
+                    Текст
+                </th>
+                <th scope="col">
+                    Рейтинг
+                </th>
+                <th scope="col">
+                    категория
+                </th>
+                <th scope="col">
+                    дата
+                </th>
+            </tr>
+            {% for post in posts %}
+            <tr>
+                <td>
+                    {{ post.author }}
+                </td>
+                <td>
+                    {{ post.zagolovok|nomat:STOP_LIST }}
+                </td>
+                <td>
+                    {{ post.novosti|nomat:STOP_LIST}}
+                </td>
+                <td>
+                    {{ post.rating }}
+                </td>
+                <td>
+                    {{ post.post_type|multiply:3 }}
+                </td>
+                  <td>
+                    {{ post.time_in }}
+                </td>
+            </tr>
+        {% endfor %}
+        </table>
+    {% else %}
+<h2>Свежих новостей нет!</h2>
+    {% endif %}
 {% endblock content %}
