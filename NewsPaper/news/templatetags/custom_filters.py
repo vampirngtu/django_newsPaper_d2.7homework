@@ -15,13 +15,15 @@ def multiply(value, arg):
     else:
         raise ValueError(f'Нельзя умножить {type(value)} на {type(arg)}') # в случае, если кто-то неправильно воспользовался нашим тегом, выводим ошибку
 
-STOP_LIST=[
+STOP_LIST=(
     "mat1",
     "mat2",
     "mat3",
-]
+)
 @register.filter(name='nomat')
-def nomat(value, STOP_LIST):
+def nomat(value):
     for world in STOP_LIST:
         if world in value:
             return str("***")
+        else:
+            return str(value)
