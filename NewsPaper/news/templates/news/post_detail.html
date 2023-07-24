@@ -1,0 +1,27 @@
+{% extends 'layout/base.html' %}
+
+
+{% block title %}
+Post
+{% endblock title %}
+
+{% block content %}
+<div class="card">
+ <div class="card-header">
+   <h3>
+     {{ post.author }}
+   </h3>
+   <div>
+     заголовок: <span class="badge bg-info">{{ post.zagolovok }}</span>
+     тип статьи: <span class="badge bg-info">{{ post.get_post_type_display }}</span>
+     рейтинг: <span class="badge bg-info">{{ post.rating }}</span>
+     дата публикации: <span class="badge bg-info">{{ post.time_in }}</span>
+     категория: <span class="badge bg-info">{{ post.postCategory }}</span>
+   </div>
+ </div>
+ <div class="card-body">
+   {{ post.novosti }}
+ </div>
+</div>
+
+{% endblock content %}

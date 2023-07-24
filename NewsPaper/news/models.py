@@ -29,7 +29,7 @@ class Category(models.Model):
 
 class Post(models.Model):
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
-    zagolovok = models.CharField(max_length=255)
+    zagolovok = models.CharField(max_length=255, unique=True)
     novosti = models.TextField(default="Новость в разработке")
     rating = models.IntegerField(default=0,
        validators=[MinValueValidator(0)],)
@@ -45,7 +45,11 @@ class Post(models.Model):
     time_in = models.DateTimeField(auto_now_add=True)
     postCategory = models.ManyToManyField(Category, through='PostCategory')
 
+    def __str__(self):
+        return f'Post #{self.pk} - Name: {self.zagolovok}'
 
+    def get_absolute_url(self):
+        return f'/post/{self.id}'
 
 
     def like(self):

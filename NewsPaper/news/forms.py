@@ -1,10 +1,32 @@
 from django.forms import ModelForm
-from .models import Author, Post, Comment
+from .models import Post, Author
+from django import forms
 
-
-# Создаём модельную форму
 class PostForm(ModelForm):
-    # в класс мета, как обычно, надо написать модель, по которой будет строиться форма и нужные нам поля. Мы уже делали что-то похожее с фильтрами.
     class Meta:
         model = Post
-        fields = ['Author', 'zagolovok', 'novosti', 'time_in']
+        fields = ['author', 'zagolovok', 'novosti', 'rating', 'post_type', 'postCategory']
+        widgets = {
+            'author': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Введите имя Автора'
+            }),
+            'zagolovok': forms.Textarea(attrs={
+                'class': 'form-control',
+            }),
+            'novosti': forms.Textarea(attrs={
+                'class': 'form-control',
+            }),
+            'rating': forms.TextInput(attrs={
+                'type': 'number',
+                'class': 'form-control',
+                'value': 0
+            }),
+            'post_type': forms.Select(attrs={
+                'class': 'form-control',
+            }),
+            'postCategory': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'категория новостей'
+            }),
+        }
